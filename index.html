@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Knowledge Bridge</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    color: white;
+    margin: 0;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.hidden { display: none; }
+
+.container {
+    width: 360px;
+    margin: 120px auto;
+    background: #1e1e1e;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px black;
+    text-align: center;
+}
+
+input, textarea {
+    width: 90%;
+    padding: 10px;
+    margin: 10px auto;
+    border-radius: 5px;
+    border: 1px solid #ff8c00;
+    background: #333;
+    color: white;
+}
+
+button {
+    padding: 10px 20px;
+    background: #ff8c00;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover { background: #e07b00; }
+
+.header {
+    text-align: center;
+    margin-top: 20px;
+}
+
+h1 {
+    color: #ff8c00;
+    letter-spacing: 3px;
+}
+
+.nav-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.topics-container {
+    max-width: 900px;
+    margin: 30px auto;
+    background: #1e1e1e;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.topic {
+    background: #00bcd4;
+    padding: 12px;
+    margin: 6px 0;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.topic:hover { background: #0097a7; }
+
+#contentViewer {
+    background: #121212;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+.footer {
+    text-align: center;
+    background: black;
+    padding: 15px;
+    margin-top: 40px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+<div class="container" id="login">
+    <h2>Login</h2>
+    <input id="username" placeholder="Username">
+    <input id="password" type="password" placeholder="Password">
+    <button onclick="checkLogin()">Login</button>
+    <p id="error" style="color:red"></p>
+</div>
+
+<!-- MAIN CONTENT -->
+<div id="content" class="hidden">
+
+<div class="header">
+    <h1>Knowledge Bridge</h1>
+    <div class="nav-buttons">
+        <button onclick="scrollToSection('about')">About Us</button>
+        <button onclick="scrollToSection('kt')">KT Docs</button>
+        <button onclick="scrollToSection('ask')">Ask</button>
+    </div>
+</div>
+
+<!-- ABOUT -->
+<div class="topics-container" id="about">
+<h2>About Us</h2>
+<p>
+<b>Knowledge Bridge</b> is an internal learning and KT (Knowledge Transfer) platform designed to
+support freshers, lateral hires, and professionals transitioning into IT operations, monitoring,
+DevOps, and cloud roles.
+</p>
+<p>
+Our goal is to <b>bridge the gap between theory and real-world IT environments</b> by providing
+structured KT documents, tool overviews, real-use scenarios, and operational best practices.
+</p>
+<p>
+This platform helps:
+<ul>
+<li>✅ New joiners understand tools faster</li>
+<li>✅ Reduce dependency on senior team members</li>
+<li>✅ Standardize KT documentation</li>
+<li>✅ Enable self-learning</li>
+</ul>
+</p>
+</div>
+
+<!-- KT DOCUMENTS -->
+<div class="topics-container" id="kt">
+<h2>KT Documents</h2>
+<div class="topic" onclick="loadContent('nagios')">Nagios</div>
+<div class="topic" onclick="loadContent('grafana')">Grafana</div>
+<div class="topic" onclick="loadContent('linux')">Linux Commands</div>
+<div class="topic" onclick="loadContent('jira')">JIRA</div>
+<div class="topic" onclick="loadContent('devops')">DevOps</div>
+
+<div id="contentViewer">
+<h3>📘 Select a topic to view KT details</h3>
+</div>
+</div>
+
+<!-- ASK -->
+<div class="topics-container" id="ask">
+<h2>Ask or Advise</h2>
+<textarea id="suggestion" rows="4" placeholder="Type here..."></textarea>
+<button onclick="sendSuggestion()">Submit</button>
+</div>
+
+<div class="footer">
+Copywrites @ 2026 Knowledge Bridge
+</div>
+
+</div>
+
+<script>
+function checkLogin() {
+    if (
+        document.getElementById("username").value === "username" &&
+        document.getElementById("password").value === "password"
+    ) {
+        login.style.display = "none";
+        content.classList.remove("hidden");
+    } else {
+        error.innerText = "Invalid credentials";
+    }
+}
+
+function scrollToSection(id) {
+    document.getElementById(id).scrollIntoView({behavior: "smooth"});
+}
+
+function loadContent(tool) {
+    const data = {
+        nagios: `
+        <h3>Nagios</h3>
+        <p>Nagios is an open-source monitoring tool used to monitor servers, network devices,
+        applications, and services.</p>
+        <ul>
+        <li>✔ Host & Service Monitoring</li>
+        <li>✔ Alerting via Email/SMS</li>
+        <li>✔ Plugin-based architecture</li>
+        <li>✔ Widely used in NOC environments</li>
+        </ul>`,
+
+        grafana: `
+        <h3>Grafana</h3>
+        <p>Grafana is a visualization and analytics platform used to create dashboards
+        from monitoring data sources.</p>
+        <ul>
+        <li>✔ Real-time dashboards</li>
+        <li>✔ Prometheus / InfluxDB support</li>
+        <li>✔ Alerting & panels</li>
+        </ul>`,
+
+        linux: `
+        <h3>Linux Commands</h3>
+        <p>Linux is the backbone of most IT infrastructure.</p>
+        <ul>
+        <li>✔ File operations</li>
+        <li>✔ Process management</li>
+        <li>✔ Networking commands</li>
+        </ul>`,
+
+        jira: `
+        <h3>JIRA</h3>
+        <p>JIRA is used for issue tracking, sprint planning, and project management.</p>`,
+
+        devops: `
+        <h3>DevOps</h3>
+        <p>DevOps focuses on CI/CD, automation, and faster delivery.</p>
+        <ul>
+        <li>✔ Git</li>
+        <li>✔ Jenkins</li>
+        <li>✔ Docker</li>
+        <li>✔ Kubernetes</li>
+        </ul>`
+    };
+
+    document.getElementById("contentViewer").innerHTML = data[tool];
+}
+
+function sendSuggestion() {
+    const s = suggestion.value.trim();
+    if (!s) return alert("Please enter something");
+    window.location.href =
+        "mailto:premchandbommareddy@gmail.com?subject=Suggestion&body=" +
+        encodeURIComponent(s);
+}
+</script>
+
+</body>
+</html>
