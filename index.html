@@ -2,259 +2,389 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<title>Premchand Bommareddy | SOC Dashboard</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Knowledge Bridge</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;font-family:Segoe UI,Tahoma,sans-serif}
 
-body {
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364);
-    background-size: 400% 400%;
-    animation: gradientBG 15s ease infinite;
-    color: white;
-    margin: 0;
+/* ================= THEME ================= */
+:root{
+  --bg:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+  --card:rgba(255,255,255,.12);
+  --text:#fff;
+  --accent:#00eaff;
 }
 
-@keyframes gradientBG {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+body.light{
+  --bg:#f4f6f8;
+  --card:#ffffff;
+  --text:#1f2937;
+  --accent:#2563eb;
 }
 
-.hidden { display: none; }
-
-.container {
-    width: 360px;
-    margin: 120px auto;
-    background: #1e1e1e;
-    padding: 25px;
-    border-radius: 10px;
-    box-shadow: 0 0 15px black;
-    text-align: center;
+body{
+  background:var(--bg);
+  color:var(--text);
+  padding:25px;
+  transition:.3s;
 }
 
-input, textarea {
-    width: 90%;
-    padding: 10px;
-    margin: 10px auto;
-    border-radius: 5px;
-    border: 1px solid #ff8c00;
-    background: #333;
-    color: white;
+/* ================= OTP ================= */
+#otpGate{
+  position:fixed;
+  inset:0;
+  background:var(--bg);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
 }
 
-button {
-    padding: 10px 20px;
-    background: #ff8c00;
-    border: none;
-    border-radius: 5px;
-    font-weight: bold;
-    cursor: pointer;
+.otp-box{
+  background:var(--card);
+  padding:30px;
+  border-radius:14px;
+  width:340px;
+  text-align:center;
 }
 
-button:hover { background: #e07b00; }
-
-.header {
-    text-align: center;
-    margin-top: 20px;
+.otp-box h2{margin-bottom:15px}
+.otp-box input{
+  width:100%;
+  padding:10px;
+  margin:8px 0;
+  border-radius:8px;
+  border:none;
+}
+.otp-box button{
+  width:100%;
+  padding:10px;
+  margin-top:10px;
+  border:none;
+  border-radius:8px;
+  background:var(--accent);
+  color:#000;
+  font-weight:600;
+  cursor:pointer;
 }
 
-h1 {
-    color: #ff8c00;
-    letter-spacing: 3px;
+/* ================= HEADER ================= */
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:30px;
 }
 
-.nav-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    flex-wrap: wrap;
+.header h1{font-size:2.1rem}
+.header p{opacity:.75}
+
+.header-right{
+  display:flex;
+  gap:18px;
+  align-items:center;
 }
 
-.topics-container {
-    max-width: 900px;
-    margin: 30px auto;
-    background: #1e1e1e;
-    padding: 20px;
-    border-radius: 10px;
+.theme-toggle,
+.search-icon{
+  font-size:1.2rem;
+  cursor:pointer;
+  color:var(--accent);
 }
 
-.topic {
-    background: #00bcd4;
-    padding: 12px;
-    margin: 6px 0;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
+.search-input{
+  position:absolute;
+  top:65px;
+  right:25px;
+  width:240px;
+  padding:10px 14px;
+  border-radius:25px;
+  border:none;
+  display:none;
 }
 
-.topic:hover { background: #0097a7; }
+/* ================= SECTIONS ================= */
+.section{margin-bottom:55px}
 
-#contentViewer {
-    background: #121212;
-    padding: 20px;
-    border-radius: 10px;
-    margin-top: 20px;
+.section-title{
+  font-size:1.7rem;
+  margin-bottom:20px;
+  border-left:5px solid var(--accent);
+  padding-left:12px;
 }
 
-.footer {
-    text-align: center;
-    background: black;
-    padding: 15px;
-    margin-top: 40px;
+.sub-title{
+  font-size:1.2rem;
+  margin:30px 0 15px;
+  color:var(--accent);
 }
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:18px;
+}
+
+.card{
+  background:var(--card);
+  padding:22px;
+  border-radius:14px;
+  text-decoration:none;
+  color:var(--text);
+  transition:.3s;
+  backdrop-filter:blur(8px);
+}
+
+.card:hover{transform:translateY(-6px)}
+.card i{font-size:2.1rem;color:var(--accent);margin-bottom:10px}
+.card h3{font-size:1.05rem}
+.card p{font-size:.85rem;opacity:.8}
+
+footer{text-align:center;opacity:.7;margin-top:50px}
 </style>
 </head>
 
 <body>
 
-<!-- LOGIN -->
-<div class="container" id="login">
-    <h2>Login</h2>
-    <input id="username" placeholder="Username">
-    <input id="password" type="password" placeholder="Password">
-    <button onclick="checkLogin()">Login</button>
-    <p id="error" style="color:red"></p>
+<!-- ================= OTP GATE ================= -->
+<div id="otpGate">
+  <div class="otp-box">
+    <h2>🔐 Secure Access</h2>
+    <input type="email" id="userEmail" placeholder="Enter email" />
+    <button onclick="sendOTP()">Send OTP</button>
+    <input type="text" id="userOTP" placeholder="Enter OTP" />
+    <button onclick="verifyOTP()">Verify & Enter</button>
+  </div>
 </div>
 
-<!-- MAIN CONTENT -->
-<div id="content" class="hidden">
-
+<!-- ================= HEADER ================= -->
 <div class="header">
-    <h1>Knowledge Bridge</h1>
-    <div class="nav-buttons">
-        <button onclick="scrollToSection('about')">About Us</button>
-        <button onclick="scrollToSection('kt')">KT Docs</button>
-        <button onclick="scrollToSection('ask')">Ask</button>
-    </div>
+  <div>
+    <h1>Premchand Bommareddy</h1>
+    <p>SOC • DevOps • Reference Dashboard</p>
+  </div>
+
+  <div class="header-right">
+    <i class="fas fa-moon theme-toggle" id="themeToggle"></i>
+    <i class="fas fa-search search-icon" onclick="toggleSearch()"></i>
+  </div>
 </div>
 
-<!-- ABOUT -->
-<div class="topics-container" id="about">
-<h2>About Us</h2>
-<p>
-<b>Knowledge Bridge</b> is an internal learning and KT (Knowledge Transfer) platform designed to
-support freshers, lateral hires, and professionals transitioning into IT operations, monitoring,
-DevOps, and cloud roles.
-</p>
-<p>
-Our goal is to <b>bridge the gap between theory and real-world IT environments</b> by providing
-structured KT documents, tool overviews, real-use scenarios, and operational best practices.
-</p>
-<p>
-This platform helps:
-<ul>
-<li>✅ New joiners understand tools faster</li>
-<li>✅ Reduce dependency on senior team members</li>
-<li>✅ Standardize KT documentation</li>
-<li>✅ Enable self-learning</li>
-</ul>
-</p>
+<input type="text" id="searchInput" class="search-input"
+placeholder="Search tools, dashboards, docs...">
+
+<!-- ================= WORK ================= -->
+
+<div class="section">
+
+  <div class="section-title">💼 Work</div>
+
+
+
+  <!-- SOC -->
+
+  <div class="sub-title">🛡 SOC Monitoring</div>
+
+  <div class="grid">
+
+    <a class="card" href="http://172.30.25.13/nagios/" target="_blank"><i class="fa-solid fa-bell"></i><h3>Nagios</h3></a>
+
+    <a class="card" href="http://172.30.0.5:8787/" target="_blank"><i class="fa-solid fa-network-wired"></i><h3>SolarWinds</h3></a>
+
+    <a class="card" href="https://control.akamai.com/" target="_blank"><i class="fa-solid fa-globe"></i><h3>Akamai</h3></a>
+
+    <a class="card" href="https://elastic-apm-prod.foundit.in/" target="_blank"><i class="fa-solid fa-chart-area"></i><h3>Elastic APM</h3></a>
+
+    <a class="card" href="https://graylog-seeker-az.foundit.in/" target="_blank"><i class="fa-solid fa-database"></i><h3>Graylog Seeker AZ</h3></a>
+
+    <a class="card" href="http://172.80.16.106" target="_blank"><i class="fa-solid fa-database"></i><h3>Graylog Seeker</h3></a>
+
+    <a class="card" href="https://graylog-rec.foundit.in/" target="_blank"><i class="fa-solid fa-database"></i><h3>Graylog REC</h3></a>
+
+    <a class="card" href="https://graylog-new-rec.foundit.in/" target="_blank"><i class="fa-solid fa-database"></i><h3>Graylog New REC</h3></a>
+
+    <a class="card" href="http://172.30.1.36:3000/?orgId=1" target="_blank"><i class="fa-solid fa-chart-line"></i><h3>Grafana</h3></a>
+
+    <a class="card" href="https://monitor.monsterindia.com/mon/cron/script_cron_list.txt" target="_blank"><i class="fa-solid fa-clock"></i><h3>Cron Run State</h3></a>
+
+    <a class="card" href="https://devopstools.foundit.in/tools/vapt/vaptPortal" target="_blank"><i class="fa-solid fa-shield"></i><h3>VAPT Portal</h3></a>
+
+    <a class="card" href="http://172.30.1.36:9115/" target="_blank"><i class="fa-solid fa-signal"></i><h3>Blackbox Exporter</h3></a>
+
+    <a class="card" href="http://172.30.1.36:9090/query" target="_blank"><i class="fa-solid fa-wave-square"></i><h3>Prometheus</h3></a>
+
+    <a class="card" href="https://portal.azure.com/#home" target="_blank"><i class="fa-brands fa-microsoft"></i><h3>Azure Portal</h3></a>
+
+    <a class="card" href="https://hetrixtools.com/dashboard/" target="_blank"><i class="fa-solid fa-heart-pulse"></i><h3>Hetrix Tools</h3></a>
+
+  </div>
+
+
+
+  <!-- DevOps -->
+
+  <div class="sub-title">⚙ DevOps</div>
+
+  <div class="grid">
+
+    <a class="card" href="https://sonar-azure.monsterindia.com/admin/users" target="_blank"><i class="fa-solid fa-code"></i><h3>SonarQube</h3></a>
+
+    <a class="card" href="https://jenkins-seeker.monsterindia.com/login?from=%2Fview%2FBuild-Deploy%2Fjob%2Fseeker-app%2Fjob%… target="_blank"><i class="fa-brands fa-jenkins"></i><h3>Jenkins</h3></a>
+
+    <a class="card" href="http://gitlab.monsterindia.noida/" target="_blank"><i class="fa-brands fa-gitlab"></i><h3>GitLab</h3></a>
+
+    <a class="card" href="http://172.28.103.12:9000/clusters/newkafkaprod/consumers/new_recruiter_search_prod/type/KF" target="_blank"><i class="fa-solid fa-server"></i><h3>Kafka CMAK</h3></a>
+
+    <a class="card" href="http://172.30.25.10:15672/#/" target="_blank"><i class="fa-solid fa-server"></i><h3>RabbitMQ</h3></a>
+
+
+
+    <a class="card" href="https://argocd-rec-qa-az.foundit.in/" target="_blank"><i class="fa-solid fa-diagram-project"></i><h3>ArgoCD REC QA</h3></a>
+
+    <a class="card" href="https://argocd-rec-rfs.foundit.in/" target="_blank"><i class="fa-solid fa-diagram-project"></i><h3>ArgoCD REC RFS</h3></a>
+
+    <a class="card" href="https://argocd-rec-index.foundit.in" target="_blank"><i class="fa-solid fa-diagram-project"></i><h3>ArgoCD REC Index</h3></a>
+
+    <a class="card" href="https://argocd-rec.foundit.in/" target="_blank"><i class="fa-solid fa-diagram-project"></i><h3>ArgoCD REC</h3></a>
+
+    <a class="card" href="https://argocd-qa-az.foundit.in" target="_blank"><i class="fa-solid fa-diagram-project"></i><h3>ArgoCD QA</h3></a>
+
+    <a class="card" href="https://argocd-rfs.foundit.in/" target="_blank"><i class="fa-solid fa-diagram-project"></i><h3>ArgoCD RFS</h3></a>
+
+    <a class="card" href="https://argocd-seeker-index.foundit.in/" target="_blank"><i class="fa-solid fa-diagram-project"></i><h3>ArgoCD Seeker Index</h3></a>
+
+    <a class="card" href="https://argocd-seeker-a.foundit.in/" target="_blank"><i class="fa-solid fa-diagram-project"></i><h3>ArgoCD Seeker A</h3></a>
+
+    <a class="card" href="https://argocd-seeker-b.foundit.in/" target="_blank"><i class="fa-solid fa-diagram-project"></i><h3>ArgoCD Seeker B</h3></a>
+
+  </div>
+
+
+
+  <!-- Tickets -->
+
+  <div class="sub-title">🎫 Tickets & Confluence</div>
+
+  <div class="grid">
+
+    <a class="card" href="https://monsterconfluence.atlassian.net/jira/software/c/projects/SOC/issues" target="_blank"><i class="fa-solid fa-ticket"></i><h3>SOC Jira Dashboard</h3></a>
+
+    <a class="card" href="https://monsterconfluence.atlassian.net/jira/software/c/projects/DEVSESOPS/issues" target="_blank"><i class="fa-solid fa-ticket"></i><h3>DevOps Jira</h3></a>
+
+    <a class="card" href="https://monsterconfluence.atlassian.net/wiki/spaces/DEVOPS/overview" target="_blank"><i class="fa-solid fa-book"></i><h3>DevOps Confluence</h3></a>
+
+    <a class="card" href="https://monsterconfluence.atlassian.net/wiki/spaces/SMD/overview" target="_blank"><i class="fa-solid fa-book"></i><h3>SOC Confluence</h3></a>
+
+  </div>
+
 </div>
 
-<!-- KT DOCUMENTS -->
-<div class="topics-container" id="kt">
-<h2>KT Documents</h2>
-<div class="topic" onclick="loadContent('nagios')">Nagios</div>
-<div class="topic" onclick="loadContent('grafana')">Grafana</div>
-<div class="topic" onclick="loadContent('linux')">Linux Commands</div>
-<div class="topic" onclick="loadContent('jira')">JIRA</div>
-<div class="topic" onclick="loadContent('devops')">DevOps</div>
 
-<div id="contentViewer">
-<h3>📘 Select a topic to view KT details</h3>
-</div>
+
+<!-- ================= DOCUMENTS ================= -->
+
+<div class="section">
+
+  <div class="section-title">📚 Documents & Reference</div>
+
+  <div class="grid">
+
+    <a class="card" href="https://monsterindia.sharepoint.com/:w:/r/_layouts/15/Doc.aspx?sourcedoc=%7B0DDF7D5B-6B93-4AF2-9CFB-0C7064DB64FB%7D" target="_blank"><i class="fa-solid fa-file-word"></i><h3>Internal Audit</h3></a>
+
+    <a class="card" href="https://monsterindia.sharepoint.com/:x:/g/IQCm1p5DeX6rQqkVN4I7d1bFAWYX8ys6beklQ3c6fdNhChU" target="_blank"><i class="fa-solid fa-file-excel"></i><h3>SOC & Compliance KT</h3></a>
+
+    <a class="card" href="https://monsterindia.sharepoint.com/Monster%20India%20Documents/Forms/AllItems.aspx?id=%2FMonster%20India%20Documents%2FSOC%20Data%20Repository%2FCompliance%2FAccess%20review" target="_blank"><i class="fa-solid fa-folder"></i><h3>Compliance Reference</h3></a>
+
+    <a class="card" href="https://monsterindia.sharepoint.com/:x:/s/MonsterTech/IQAVcWzWHLMpTaqs2Fe0YdIfAWdkTic1lqGwvKoLHOwdLi4" target="_blank"><i class="fa-solid fa-users"></i><h3>On Call Sheet</h3></a>
+
+    <a class="card" href="https://monsterindia.sharepoint.com/:x:/r/_layouts/15/Doc.aspx?sourcedoc=%7B5C54C097-55FB-4281-9924-291BBCB8D0F1%7D" target="_blank"><i class="fa-solid fa-calendar"></i><h3>SOC Shift Roster</h3></a>
+
+    <a class="card" href="https://monsterindia-my.sharepoint.com/:x:/r/personal/nishikant_sevalkar_foundit_ai/_layouts/15/Doc2.aspx" target="_blank"><i class="fa-solid fa-chart-column"></i><h3>Metrics Tracker</h3></a>
+
+    <a class="card" href="https://monsterindia.sharepoint.com/:x:/r/sites/MonsterTech/_layouts/15/Doc.aspx" target="_blank"><i class="fa-solid fa-list-check"></i><h3>Service Catalogue</h3></a>
+
+    <a class="card" href="https://monsterindia.sharepoint.com/:x:/r/_layouts/15/Doc.aspx?sourcedoc=%7BC738C263-936F-4C91-AE4F-3FDD96783D96%7D" target="_blank"><i class="fa-solid fa-clipboard-check"></i><h3>Tools Daily Checklist</h3></a>
+
+  </div>
+
 </div>
 
-<!-- ASK -->
-<div class="topics-container" id="ask">
-<h2>Ask or Advise</h2>
-<textarea id="suggestion" rows="4" placeholder="Type here..."></textarea>
-<button onclick="sendSuggestion()">Submit</button>
-</div>
 
-<div class="footer">
-Copywrites @ 2026 Knowledge Bridge
-</div>
 
-</div>
+<footer>
+
+  <strong>From the desk of Premchand Bommareddy · 2026</strong>
+
+</footer>
 
 <script>
-function checkLogin() {
-    if (
-        document.getElementById("username").value === "username" &&
-        document.getElementById("password").value === "password"
-    ) {
-        login.style.display = "none";
-        content.classList.remove("hidden");
-    } else {
-        error.innerText = "Invalid credentials";
-    }
+/* ================= EMAILJS INIT ================= */
+emailjs.init("DqC85RXi7CNRHbG5m");
+
+let generatedOTP="";
+
+/* SEND OTP */
+function sendOTP(){
+  const email=document.getElementById("userEmail").value;
+  if(!email){alert("Enter email");return;}
+  generatedOTP=Math.floor(100000+Math.random()*900000).toString();
+
+  emailjs.send("service_omokwvv","template_sdm4s8h",{
+    to_email:email,
+    otp:generatedOTP
+  }).then(()=>{
+    alert("OTP sent successfully");
+  },()=>{
+    alert("Failed to send OTP");
+  });
 }
 
-function scrollToSection(id) {
-    document.getElementById(id).scrollIntoView({behavior: "smooth"});
+/* VERIFY OTP */
+function verifyOTP(){
+  const otp=document.getElementById("userOTP").value;
+  if(otp===generatedOTP){
+    document.getElementById("otpGate").style.display="none";
+  }else{
+    alert("Invalid OTP");
+  }
 }
 
-function loadContent(tool) {
-    const data = {
-        nagios: `
-        <h3>Nagios</h3>
-        <p>Nagios is an open-source monitoring tool used to monitor servers, network devices,
-        applications, and services.</p>
-        <ul>
-        <li>✔ Host & Service Monitoring</li>
-        <li>✔ Alerting via Email/SMS</li>
-        <li>✔ Plugin-based architecture</li>
-        <li>✔ Widely used in NOC environments</li>
-        </ul>`,
-
-        grafana: `
-        <h3>Grafana</h3>
-        <p>Grafana is a visualization and analytics platform used to create dashboards
-        from monitoring data sources.</p>
-        <ul>
-        <li>✔ Real-time dashboards</li>
-        <li>✔ Prometheus / InfluxDB support</li>
-        <li>✔ Alerting & panels</li>
-        </ul>`,
-
-        linux: `
-        <h3>Linux Commands</h3>
-        <p>Linux is the backbone of most IT infrastructure.</p>
-        <ul>
-        <li>✔ File operations</li>
-        <li>✔ Process management</li>
-        <li>✔ Networking commands</li>
-        </ul>`,
-
-        jira: `
-        <h3>JIRA</h3>
-        <p>JIRA is used for issue tracking, sprint planning, and project management.</p>`,
-
-        devops: `
-        <h3>DevOps</h3>
-        <p>DevOps focuses on CI/CD, automation, and faster delivery.</p>
-        <ul>
-        <li>✔ Git</li>
-        <li>✔ Jenkins</li>
-        <li>✔ Docker</li>
-        <li>✔ Kubernetes</li>
-        </ul>`
-    };
-
-    document.getElementById("contentViewer").innerHTML = data[tool];
+/* SEARCH */
+function toggleSearch(){
+  const s=document.getElementById("searchInput");
+  s.style.display=s.style.display==="block"?"none":"block";
+  s.focus();
 }
 
-function sendSuggestion() {
-    const s = suggestion.value.trim();
-    if (!s) return alert("Please enter something");
-    window.location.href =
-        "mailto:premchandbommareddy@gmail.com?subject=Suggestion&body=" +
-        encodeURIComponent(s);
+document.getElementById("searchInput").addEventListener("keyup",function(){
+  const q=this.value.toLowerCase();
+  document.querySelectorAll(".card").forEach(card=>{
+    card.style.display=card.innerText.toLowerCase().includes(q)?"block":"none";
+  });
+});
+
+/* THEME */
+const toggle=document.getElementById("themeToggle");
+const saved=localStorage.getItem("theme");
+
+if(saved==="light"){
+  document.body.classList.add("light");
+  toggle.classList.replace("fa-moon","fa-sun");
 }
+
+toggle.addEventListener("click",()=>{
+  document.body.classList.toggle("light");
+  const light=document.body.classList.contains("light");
+  toggle.classList.toggle("fa-sun",light);
+  toggle.classList.toggle("fa-moon",!light);
+  localStorage.setItem("theme",light?"light":"dark");
+});
 </script>
 
 </body>
