@@ -170,7 +170,15 @@ footer{text-align:center;opacity:.7;margin-top:50px}
 </head>
 
 <body>
-
+<!-- PIN -->
+<div class="pin-overlay" id="pinOverlay">
+  <div class="pin-box">
+    <h2>🔐 Enter PIN</h2>
+    <input type="password" id="pinInput" placeholder="Enter PIN">
+    <button onclick="checkPin()">Unlock</button>
+    <div class="pin-error" id="pinError">Invalid PIN</div>
+  </div>
+</div>
 
 <!-- ================= HEADER ================= -->
 <div class="header">
@@ -193,7 +201,6 @@ placeholder="Search tools, dashboards, docs...">
 <div class="section">
 
   <div class="section-title">💼 Work</div>
-
 
 
   <!-- SOC -->
@@ -253,7 +260,6 @@ placeholder="Search tools, dashboards, docs...">
       <h3>Google Ads Manager</h3>
       <p>User access</p>
     </a>
-
   
     <a class="card" href="https://in1.dashboard.clevertap.com/6K9-ZK8-ZZ6Z/account-setup/users-setting" target="_blank">
       <i class="fa-solid fa-bolt"></i>
@@ -287,8 +293,6 @@ placeholder="Search tools, dashboards, docs...">
 
     <a class="card" href="http://172.30.25.10:15672/#/" target="_blank"><i class="fa-solid fa-server"></i><h3>RabbitMQ</h3></a>
 
-
-
     <a class="card" href="https://argocd-rec-qa-az.foundit.in/" target="_blank"><i class="fa-solid fa-diagram-project"></i><h3>ArgoCD REC QA</h3></a>
 
     <a class="card" href="https://argocd-rec-rfs.foundit.in/" target="_blank"><i class="fa-solid fa-diagram-project"></i><h3>ArgoCD REC RFS</h3></a>
@@ -309,8 +313,6 @@ placeholder="Search tools, dashboards, docs...">
 
   </div>
 
-
-
   <!-- Tickets -->
 
   <div class="sub-title">🎫 Tickets & Confluence</div>
@@ -328,8 +330,6 @@ placeholder="Search tools, dashboards, docs...">
   </div>
 
 </div>
-
-
 
 <!-- ================= DOCUMENTS ================= -->
 
@@ -358,7 +358,6 @@ placeholder="Search tools, dashboards, docs...">
   </div>
 
 </div>
-
 
 
 <footer>
