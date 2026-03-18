@@ -73,6 +73,25 @@ body{
   font-weight:600;
   cursor:pointer;
 }
+/* ================= PIN ================= */
+.pin-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.9);
+  display:flex;align-items:center;justify-content:center;z-index:9999
+}
+.pin-box{
+  background:#102a33;padding:30px;border-radius:14px;width:320px;
+  text-align:center;box-shadow:0 15px 40px rgba(0,0,0,.6)
+}
+.pin-box h2{color:#00eaff;margin-bottom:15px}
+.pin-box input{
+  width:100%;padding:12px;border:none;border-radius:8px;
+  font-size:1.1rem;text-align:center
+}
+.pin-box button{
+  width:100%;margin-top:10px;padding:12px;border:none;
+  border-radius:8px;background:#00eaff;font-weight:bold;cursor:pointer
+}
+.pin-error{color:#ff6b6b;margin-top:10px;display:none}
 
 /* ================= HEADER ================= */
 .header{
@@ -349,6 +368,16 @@ placeholder="Search tools, dashboards, docs...">
 </footer>
 
 <script>
+/* PIN */
+function checkPin(){
+  const pin=document.getElementById("pinInput").value;
+  if(pin==="1412"||pin==="6463"||pin==="9494"||pin==="2000"||pin==="0000"||pin==="0901"){
+    document.getElementById("pinOverlay").style.display="none";
+  }else{
+    document.getElementById("pinError").style.display="block";
+  }
+}
+  
 /* ================= EMAILJS INIT ================= */
 emailjs.init("DqC85RXi7CNRHbG5m");
 
